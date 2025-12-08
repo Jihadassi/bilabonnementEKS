@@ -7,14 +7,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
-@Repository // den fortæller spring at denne klasse snakker med databasen
+// den fortæller spring at denne klasse snakker med databasen
+@Repository
+
 // this class is a bean that organizes persistence logic
 public class CarRepository { // i denne klasse ligger database metoderne for Car
     private final JdbcTemplate jdbc; // en variabel som bruges til sql commands
 
 
 
-    // This runs when the object is created.
+// This runs when the object is created.
 //Spring gives us a JdbcTemplate, and we store it in our own jdbc variable.
     public CarRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;

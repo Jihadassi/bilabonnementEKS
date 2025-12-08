@@ -1,6 +1,5 @@
 package com.example.bilabonnementeks.model;
-
-import java.util.Date;
+import java.sql.Date;
 
 public class RentalContract {
 
@@ -19,6 +18,7 @@ public class RentalContract {
     private Date endDate;
 
     //Skal måske bruges til kundeoplysninger i lejekontrakten
+    private int customerId;
     private String customerName;
     private String customerEmail;
     private String customerPhoneNumber;
