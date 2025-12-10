@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>LogIn</title>
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+
+<body>
+
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <form th:action="@{/login}" method="post"
+        style="background-color: #f7f7f7; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 300px;">
+
+    <h2 style="text-align:center; margin-bottom: 20px;">Login</h2>
+
+    <label for="username">Brugernavn:</label>
+    <input type="text" id="username" name="username" placeholder="Indtast brugernavn" required
+           style="width: 100%; padding: 8px; margin-bottom: 15px;">
+
+    <label for="password">Adgangskode:</label>
+    <input type="password" id="password" name="password" placeholder="Indtast adgangskode" required
+           style="width: 100%; padding: 8px; margin-bottom: 15px;">
+
+    <!-- 🔥 FIXET FEJLBESKED -->
+    <p th:if="${param.error}" style="color: red; margin-bottom: 15px;">
+      Forkert navn eller adgangskode
+    </p>
+
+    <button type="submit"
+            style="width: 100%; padding: 10px; background-color: #2196f3; color:white; border:none; border-radius:5px; cursor:pointer;">
+      Log ind
+    </button>
+  </form>
+</div>
+
+</body>
+</html>
+
