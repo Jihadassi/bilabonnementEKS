@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"> xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="header">
+    <header style="position: relative; min-height: 60px; padding: 10px 20px; background-color: #e0f0ff; display: flex; align-items: center;">
+
+        <!-- Titel centreret -->
+        <h2 style="margin:0; position:absolute; left:50%; transform:translateX(-50%);">Bilabonnement A/S</h2>
+
+        <!-- Log ud knap -->
+        <div style="position:absolute; right:20px;">
+            <a th:href="@{/logout}" style="text-decoration:none; color:red; font-weight:bold;">Log ud</a>
+        </div>
+    </header>
+</div>
+</body>
+</html>
