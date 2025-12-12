@@ -42,5 +42,7 @@ public class CarService {
     public void setActiveStatus(int carId, boolean status) {
         carRepository.setActiveStatus(carId, status);
     }
+
+
 }
 
