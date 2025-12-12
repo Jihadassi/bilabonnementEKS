@@ -1,64 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+    <html lang="da" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title>Forretningsudvikler – Biler</title>
-    <link rel="stylesheet" th:href="@{/css/global.css}">
-    <link rel="stylesheet" th:href="@{/css/fu.css}">
-</head>
+    <head>
+        <title>Forretningsudvikler – Biler</title>
+        <link rel="stylesheet" th:href="@{/global.css}">
+        <link rel="stylesheet" th:href="@{/fu.css}">
+    </head>
 
-<body>
+    <body>
 
-<div th:replace="Fragments/header :: header"></div>
+    <div th:replace="Fragments/header :: header"></div>
 
-<div class="main-container">
+    <div class="main-container">
 
-    <h1>Biloversigt</h1>
+        <h1>Biloversigt</h1>
 
-    <table class="table">
-        <tr>
-            <th>Mærke</th>
-            <th>Model</th>
-            <th>Kilometer</th>
-            <th>Status</th>
-            <th>Pris pr. måned</th>
-        </tr>
+        <table class="table">
+            <tr>
+                <th>Mærke</th>
+                <th>Model</th>
+                <th>Kilometer</th>
+                <th>Status</th>
+                <th>Pris pr. måned</th>
+            </tr>
 
-        <tr th:each="car : ${cars}">
-            <td th:text="${car.carBrand}"></td>
-            <td th:text="${car.carModel}"></td>
-            <td th:text="${car.currentKm}"></td>
-            <td th:text="${car.activeStatus} ? 'Aktiv' : 'Inaktiv'"></td>
-            <td th:text="${car.carRentPrice} + ' kr'"></td>
-        </tr>
-    </table>
+            <tr th:each="car : ${cars}">
+                <td th:text="${car.carBrand}"></td>
+                <td th:text="${car.carModel}"></td>
+                <td th:text="${car.currentKm}"></td>
+                <td th:text="${car.activeStatus} ? 'Aktiv' : 'Inaktiv'"></td>
+                <td th:text="${car.carRentPrice} + ' kr'"></td>
+            </tr>
+        </table>
 
-    <div class="fu-summary-box">
+        <div class="fu-summary-box">
 
-        <div class="fu-stat">
-            Aktive biler: <b th:text="${activeCount}"></b>
-        </div>
+            <div class="fu-stat">
+                Aktive biler: <b th:text="${activeCount}"></b>
+            </div>
 
-        <div class="fu-stat">
-            Inaktive biler: <b th:text="${inactiveCount}"></b>
-        </div>
+            <div class="fu-stat">
+                Inaktive biler: <b th:text="${inactiveCount}"></b>
+            </div>
 
-        <div class="fu-stat">
-            Månedsindtægt (aktive biler):
-            <b th:text="${totalActiveRevenue} + ' kr'"></b>
-        </div>
+            <div class="fu-stat">
+                Månedsindtægt (aktive biler):
+                <b th:text="${totalActiveRevenue} + ' kr'"></b>
+            </div>
 
-        <div class="fu-stat">
-            Potentiel samlet indtægt (hvis alle biler var aktive):
-            <b class="fu-small-gray"
-               th:text="${totalPotentialRevenue} + ' kr'"></b>
+            <div class="fu-stat">
+                Potentiel samlet indtægt (hvis alle biler var aktive):
+                <b class="fu-small-gray"
+                   th:text="${totalPotentialRevenue} + ' kr'"></b>
+            </div>
+
         </div>
 
     </div>
 
-</div>
+    <div th:replace="Fragments/footer :: footer"></div>
 
-<div th:replace="Fragments/footer :: footer"></div>
-
-</body>
-</html>
+    </body>
+    </html>
+/>

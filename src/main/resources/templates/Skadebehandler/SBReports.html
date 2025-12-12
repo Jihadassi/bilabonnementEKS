@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Skadesrapporter</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/dr.css}">
 </head>
 <body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="main-container">
+    <h1>Skadesrapporter</h1>
+
+    <a th:href="@{/sb/new/report}" class="btn-green" style="margin-bottom:15px; display:inline-block;">Opret ny rapport</a>
+
+    <div class="link-list">
+        <a th:each="report : ${reports}"
+           th:href="@{/sb/report/{id}(id=${report.damageId})}"
+           th:text="${report.damageId} + ' - Bil ID: ' + ${report.carId} + ', Kunde ID: ' + ${report.customerId}">
+        </a>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
 
 </body>
 </html>
