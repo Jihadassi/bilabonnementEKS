@@ -1,0 +1,9 @@
+.sb-container {
+    width: 900px;
+    margin: auto;
+}
+
+.sb-error {
+    color: red;
+    margin-top: 10px;
+}
