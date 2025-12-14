@@ -1,8 +1,8 @@
 package com.example.bilabonnementeks.controller;
 
 
-import com.example.bilabonnementeks.Repository.CarRepository;
-import com.example.bilabonnementeks.Service.RentalContractService;
+import com.example.bilabonnementeks.repository.CarRepository;
+import com.example.bilabonnementeks.service.RentalContractService;
 import com.example.bilabonnementeks.model.Car;
 import com.example.bilabonnementeks.model.RentalContract;
 import org.springframework.stereotype.Controller;

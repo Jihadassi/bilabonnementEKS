@@ -1,7 +1,7 @@
 package com.example.bilabonnementeks.service;
 
-import com.example.bilabonnementeks.Repository.CarRepository;
-import com.example.bilabonnementeks.Repository.RentalContractRepository;
+import com.example.bilabonnementeks.repository.CarRepository;
+import com.example.bilabonnementeks.repository.RentalContractRepository;
 import com.example.bilabonnementeks.model.Car;
 import com.example.bilabonnementeks.model.RentalContract;
 import org.springframework.stereotype.Service;

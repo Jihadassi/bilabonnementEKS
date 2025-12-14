@@ -1,6 +1,5 @@
 package com.example.bilabonnementeks.repository;
 import com.example.bilabonnementeks.model.DamageReport;
-import com.example.bilabonnementeks.model.DamageReportMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -19,17 +18,17 @@ public class DamageReportRepository {
     }
 
     public List<DamageReport> findAll() {
-        String sql = "SELECT * FROM DAMAGE_REPORT ORDER BY damage_id DESC";
+        String sql = "SELECT * FROM damageReport ORDER BY damage_id DESC";
         return jdbcTemplate.query(sql, new DamageReportMapper());
     }
 
     public DamageReport findById(int id) {
-        String sql = "SELECT * FROM DAMAGE_REPORT WHERE damage_id = ?";
+        String sql = "SELECT * FROM damageReport WHERE damage_id = ?";
         return jdbcTemplate.queryForObject(sql, new DamageReportMapper(), id);
     }
 
     public void create(DamageReport report) {
-        String sql = "INSERT INTO DAMAGE_REPORT (text_description, damage_price, car_id, customer_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO damageReport (text_description, damage_price, car_id, customer_id) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 report.getTextDescription(),
                 report.getDamagePrice(),
@@ -38,7 +37,7 @@ public class DamageReportRepository {
     }
 
     public void delete(int id) {
-        String sql = "DELETE FROM DAMAGE_REPORT WHERE damage_id = ?";
+        String sql = "DELETE FROM damageReport WHERE damage_id = ?";
         jdbcTemplate.update(sql, id);
     }
 

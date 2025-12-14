@@ -1,4 +1,4 @@
-package com.example.bilabonnementeks.View;
+package com.example.bilabonnementeks.view;
 
 public class ContractView {
     public int contractId;

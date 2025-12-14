@@ -1,7 +1,7 @@
 package com.example.bilabonnementeks.service;
 
 import com.example.bilabonnementeks.model.Car;
-import com.example.bilabonnementeks.Repository.CarRepository;
+import com.example.bilabonnementeks.repository.CarRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

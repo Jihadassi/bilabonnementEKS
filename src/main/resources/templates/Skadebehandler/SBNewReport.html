@@ -1,65 +1,74 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Forretningsudvikler – Biler</title>
-    <link rel="stylesheet" th:href="@{/global.css}">
-    <link rel="stylesheet" th:href="@{/fu.css}">
+    <title>Opret Skadesrapport</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/sb.css}">
 </head>
-
 <body>
 
-<div th:replace="Fragments/header :: header"></div>
+<div th:replace="fragments/header :: header"></div>
 
-<div class="main-container">
+<div class="sb-container">
+    <h2>Opret ny skadesrapport</h2>
 
-    <h1>Biloversigt</h1>
+    <form th:action="@{/sb/reports}"
+          th:object="${damageReport}"
+          method="post"
+          class="sb-form">
 
-    <table class="table">
-        <tr>
-            <th>Mærke</th>
-            <th>Model</th>
-            <th>Kilometer</th>
-            <th>Status</th>
-            <th>Pris pr. måned</th>
-        </tr>
+        <!-- Vælg bil -->
+        <label for="car">Vælg bil</label>
+        <select id="car" th:field="*{carId}" onchange="updateCustomerId()">
+            <option value="" disabled selected>-- Vælg bil --</option>
+            <option th:each="car : ${cars}"
+                    th:value="${car.carId}"
+                    th:text="${car.carBrand} + ' ' + ${car.carModel}"
+                    th:data-customer="${car.customerId}">
+            </option>
+        </select>
 
-        <tr th:each="car : ${cars}">
-            <td th:text="${car.carBrand}"></td>
-            <td th:text="${car.carModel}"></td>
-            <td th:text="${car.currentKm}"></td>
-            <td th:text="${car.activeStatus} ? 'Aktiv' : 'Inaktiv'"></td>
-            <td th:text="${car.carRentPrice} + ' kr'"></td>
-        </tr>
-    </table>
+        <!-- Skjult customerId -->
+        <input type="hidden" id="customerId" th:field="*{customerId}" />
 
-    <div class="fu-summary-box">
+        <!-- Beskrivelse -->
+        <label for="textDescription">Beskrivelse</label>
+        <textarea id="textDescription"
+                  th:field="*{textDescription}"
+                  rows="5"
+                  placeholder="Beskriv skaden her..."></textarea>
 
-        <div class="fu-stat">
-            Aktive biler: <b th:text="${activeCount}"></b>
+        <!-- Pris -->
+        <label for="damagePrice">Pris (kr.)</label>
+        <input type="number"
+               id="damagePrice"
+               th:field="*{damagePrice}"
+               placeholder="Indtast pris" />
+
+        <!-- Knapper -->
+        <div class="sb-button-row">
+            <button type="submit" class="sb-btn-green">
+                Gem rapport
+            </button>
+
+            <a th:href="${homeUrl}" class="sb-btn-red">
+                Tilbage
+            </a>
         </div>
 
-        <div class="fu-stat">
-            Inaktive biler: <b th:text="${inactiveCount}"></b>
-        </div>
-
-        <div class="fu-stat">
-            Månedsindtægt (aktive biler):
-            <b th:text="${totalActiveRevenue} + ' kr'"></b>
-        </div>
-
-        <div class="fu-stat">
-            Potentiel samlet indtægt (hvis alle biler var aktive):
-            <b class="fu-small-gray"
-               th:text="${totalPotentialRevenue} + ' kr'"></b>
-        </div>
-
-    </div>
-
+    </form>
 </div>
 
-<div th:replace="Fragments/footer :: footer"></div>
+<div th:replace="fragments/footer :: footer"></div>
+
+<script>
+    function updateCustomerId() {
+        const select = document.getElementById('car');
+        const selectedOption = select.selectedOptions[0];
+        document.getElementById('customerId').value =
+            selectedOption?.dataset.customer || '';
+    }
+</script>
 
 </body>
 </html>
-/>

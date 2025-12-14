@@ -1,7 +1,7 @@
 package com.example.bilabonnementeks.service;
 
 import com.example.bilabonnementeks.model.User;
-import com.example.bilabonnementeks.Repository.UserRepository;
+import com.example.bilabonnementeks.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service

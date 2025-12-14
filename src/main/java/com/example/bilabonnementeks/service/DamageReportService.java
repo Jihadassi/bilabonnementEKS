@@ -1,7 +1,7 @@
 package com.example.bilabonnementeks.service;
 
 
-import com.example.bilabonnementeks.Repository.DamageReportRepository;
+import com.example.bilabonnementeks.repository.DamageReportRepository;
 import com.example.bilabonnementeks.model.DamageReport;
 import org.springframework.stereotype.Service;
 

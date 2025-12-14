@@ -2,7 +2,7 @@ package com.example.bilabonnementeks.service;
 
 
 
-import com.example.bilabonnementeks.Repository.CustomerRepository;
+import com.example.bilabonnementeks.repository.CustomerRepository;
 import com.example.bilabonnementeks.model.Customer;
 import org.springframework.stereotype.Service;
 

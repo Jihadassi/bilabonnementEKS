@@ -1,7 +1,7 @@
 package com.example.bilabonnementeks.controller;
 
 import org.springframework.ui.Model;
-import com.example.bilabonnementeks.Service.CarService;
+import com.example.bilabonnementeks.service.CarService;
 import com.example.bilabonnementeks.model.Car;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class FUController {
 
     @GetMapping ("/fu/menu")
     public String fuMenu() {
-        return "fu/menu";
+        return "Forretningsudvikler/FUMenu";
     }
 
     @GetMapping("/fu/cars")
@@ -47,7 +47,8 @@ public class FUController {
         model.addAttribute("activePayment", activePayment);
         model.addAttribute("totalPayment", totalPayment);
 
-        return "fu/cars";
+        return "Forretningsudvikler/FUCars";
+
     }
 
     @GetMapping("/fu/statistics")
@@ -75,7 +76,8 @@ public class FUController {
         model.addAttribute("monthlyActivePayment", monthlyActivePayment);
         model.addAttribute("monthlyTotalPayment", monthlyTotalPayment);
 
-        return "fu/statistics";
+        return "Forretningsudvikler/FUStatistics";
+
     }
 
 }
