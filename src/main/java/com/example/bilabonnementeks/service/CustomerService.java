@@ -21,6 +21,10 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public List<Customer> getAllCustomersOrderBy(String orderBy) {
+        return customerRepository.findAllOrderBy(orderBy);
+    }
+
     public Customer findById(int id) {
         return customerRepository.findById(id);
     }
@@ -31,5 +35,9 @@ public class CustomerService {
 
     public Customer findByEmail(String email) {
         return customerRepository.findByEmail(email);
+    }
+
+    public void deleteCustomer(int id) {
+        customerRepository.deleteById(id);
     }
 }

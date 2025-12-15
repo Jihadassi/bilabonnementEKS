@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Opret kunde</title>
+    <link rel="stylesheet" th:href="@{/CSS/global.css}">
+    <link rel="stylesheet" th:href="@{/CSS/dr.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="main-container">
+    <h1>Opret ny kunde</h1>
+
+    <form th:action="@{/dr/customers}" th:object="${customer}" method="post">
+
+        <label>Fulde navn</label>
+        <input type="text" th:field="*{fullName}" required>
+
+        <label>Email</label>
+        <input type="email" th:field="*{email}" required>
+
+        <label>Telefon</label>
+        <input type="text" th:field="*{phoneNumber}" required>
+
+        <label>Adresse</label>
+        <input type="text" th:field="*{address}" required>
+
+        <br><br>
+
+        <button type="submit" class="btn-green">Gem kunde</button>
+        <a th:href="@{/dr/customers}">
+            <button type="button" class="btn-grey">Annuller</button>
+        </a>
+
+    </form>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

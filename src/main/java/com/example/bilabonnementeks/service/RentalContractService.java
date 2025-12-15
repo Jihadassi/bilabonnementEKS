@@ -36,7 +36,21 @@ public class RentalContractService {
         carRepository.setActiveStatus(rc.getCarId(), true);
     }
 
+    public boolean customerHasActiveContracts(int customerId) {
+        return rentalContractRepository.customerHasActiveContracts(customerId);
+    }
 
 
+    public List<RentalContract> getContractsByStatus(String status) {
+        return switch (status) {
+            case "active" -> rentalContractRepository.findActiveContracts();
+            case "inactive" -> rentalContractRepository.findInactiveContracts();
+            default -> rentalContractRepository.findAll();
+        };
+    }
+
+    public void closeContract(int contractId) {
+        rentalContractRepository.closeContract(contractId);
+    }
 
 }

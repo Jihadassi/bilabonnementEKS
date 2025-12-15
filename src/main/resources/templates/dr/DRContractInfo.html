@@ -21,7 +21,7 @@
         <tr><th>Slutdato</th><td th:text="${contract.endDate}"></td></tr>
         <tr><th>Inkluderede km</th><td th:text="${contract.includedKm}"></td></tr>
         <tr><th>Aktuelt km</th><td th:text="${contract.currentKm}"></td></tr>
-        <tr><th>Pris</th><td th:text="${contract.carRentPrice}"></td></tr>
+        <tr><th>Pris pr. måned</th><td th:text="${contract.carRentPrice}"></td></tr>
         <tr><th>Afhentningssted</th><td th:text="${contract.pickupLocation}"></td></tr>
         <tr><th>Afleveringssted</th><td th:text="${contract.dropoffLocation}"></td></tr>
         <tr><th>Bil ID</th><td th:text="${contract.carId}"></td></tr>
@@ -29,22 +29,31 @@
     </table>
 
     <h2>Kunde</h2>
+    <div th:if="${customer != null}">
     <table class="table">
-        <tr><th>Navn</th><td th:text="${customer != null ? customer.fullName : '—'}"></td></tr>
-        <tr><th>Email</th><td th:text="${customer != null ? customer.email : '—'}"></td></tr>
-        <tr><th>Telefon</th><td th:text="${customer != null ? customer.phoneNumber : '—'}"></td></tr>
-        <tr><th>Adresse</th><td th:text="${customer != null ? customer.address : '—'}"></td></tr>
+        <tr><th>Navn</th><td th:text="${customer.fullName}"></td></tr>
+        <tr><th>Email</th><td th:text="${customer.email}"></td></tr>
+        <tr><th>Telefon</th><td th:text="${customer.phoneNumber}"></td></tr>
+        <tr><th>Adresse</th><td th:text="${customer.address}"></td></tr>
     </table>
-
+    </div>
+    <div th:if="${customer == null}">
+        <p><em>Kontrakten er afsluttet, ingen kunde tilknyttet.</em></p>
+    </div>
     <div class="dr-top-buttons">
+
         <a th:href="@{/dr/contracts}">
             <button class="btn-blue">Tilbage</button>
         </a>
 
-        <a th:href="@{'/dr/contracts/delete/' + ${contract.contractId}}"
-           onclick="return confirm('Slet kontrakt + kunde?');">
-            <button class="btn-red">Slet kontrakt + kunde</button>
-        </a>
+        <form th:if="${customer != null}"
+              th:action="@{/dr/contracts/close/{id}(id=${contract.contractId})}"
+              method="post"
+              onsubmit="return confirm('Vil du afslutte kontrakten?');">
+
+            <button class="btn-red">Afslut kontrakt</button>
+        </form>
+
     </div>
 
 </div>

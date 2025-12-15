@@ -1,5 +1,7 @@
 package com.example.bilabonnementeks.controller;
 
+import com.example.bilabonnementeks.model.User;
+import com.example.bilabonnementeks.service.LoginService;
 import jakarta.servlet.http.HttpSession; // bruges til at arbejde med info lagring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,7 +21,7 @@ public class LoginController { //håndterer HTTP-requests.
     private final JdbcTemplate jdbcTemplate; // værktøj til at sende SQL-queries til databasen.
 
     @Autowired
-    public LoginController(JdbcTemplate jdbcTemplate) {
+    public LoginController(JdbcTemplate jdbcTemplate, LoginService loginService) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -93,6 +95,8 @@ public class LoginController { //håndterer HTTP-requests.
             return "redirect:/login";
         }
     }
+
+
 
     /**
      * GET /logout - fortæller systemet at denne bruger, bruger ikke længere systemet

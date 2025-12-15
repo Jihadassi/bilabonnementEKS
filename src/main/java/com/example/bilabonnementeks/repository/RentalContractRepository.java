@@ -9,11 +9,12 @@ import java.util.List;
 @Repository
 public class RentalContractRepository {
 
-        private final JdbcTemplate jdbc;
 
-        public RentalContractRepository(JdbcTemplate jdbc) {
-            this.jdbc = jdbc;
-        }
+    private final JdbcTemplate jdbcTemplate;
+
+    public RentalContractRepository(JdbcTemplate jdbc, JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     private RentalContract mapRow(java.sql.ResultSet rs) throws java.sql.SQLException {
         RentalContract rc = new RentalContract();
@@ -33,17 +34,35 @@ public class RentalContractRepository {
 
     public List<RentalContract> findAll() {
         String sql = "SELECT * FROM rentalContracts ORDER BY contract_id DESC";
-        return jdbc.query(sql, (rs, row) -> mapRow(rs));
+        return jdbcTemplate.query(sql, (rs, row) -> mapRow(rs));
     }
 
     public RentalContract findById(int id) {
         String sql = "SELECT * FROM rentalContracts WHERE contract_id = ?";
-        return jdbc.queryForObject(sql, new Object[]{id}, (rs, row) -> mapRow(rs));
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, row) -> mapRow(rs));
     }
 
     public List<RentalContract> findCustomerId(int customerId) {
         String sql = "SELECT * FROM rentalContracts WHERE customer_id = ?";
-        return jdbc.query(sql, new Object[]{customerId}, (rs, row) -> mapRow(rs));
+        return jdbcTemplate.query(sql, new Object[]{customerId}, (rs, row) -> mapRow(rs));
+    }
+
+    public List<RentalContract> findActiveContracts() {
+        String sql = """
+        SELECT * FROM rentalContracts
+        WHERE customer_id IS NOT NULL
+        ORDER BY contract_id DESC
+    """;
+        return jdbcTemplate.query(sql, (rs, row) -> mapRow(rs));
+    }
+
+    public List<RentalContract> findInactiveContracts() {
+        String sql = """
+        SELECT * FROM rentalContracts
+        WHERE customer_id IS NULL
+        ORDER BY contract_id DESC
+    """;
+        return jdbcTemplate.query(sql, (rs, row) -> mapRow(rs));
     }
 
 
@@ -55,7 +74,7 @@ public class RentalContractRepository {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-        jdbc.update(sql,
+        jdbcTemplate.update(sql,
                 rc.getStartDate(),
                 rc.getEndDate(),
                 rc.getCurrentKm(),
@@ -69,5 +88,23 @@ public class RentalContractRepository {
         );
     }
 
+    public void closeContract(int contractId) {
+        String sql = """
+        UPDATE rentalContracts
+        SET customer_id = NULL
+        WHERE contract_id = ?
+    """;
+        jdbcTemplate.update(sql, contractId);
+    }
+
+    public boolean customerHasActiveContracts(int customerId) {
+        String sql = """
+        SELECT COUNT(*) 
+        FROM rentalContracts 
+        WHERE customer_id = ?
+    """;
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, customerId);
+        return count != null && count > 0;
+    }
 
 }

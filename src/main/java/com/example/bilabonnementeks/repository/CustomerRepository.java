@@ -25,8 +25,28 @@ public class CustomerRepository {
 
     public Customer findById(int id) {
         String sql = "SELECT * FROM customer WHERE customer_id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new CustomerMapper());
+        List<Customer> result = jdbcTemplate.query(sql, new CustomerMapper(), id);
+        return result.isEmpty() ? null : result.get(0);
     }
+
+    public List<Customer> findAllOrderBy(String orderBy) {
+
+        String order;
+
+        switch (orderBy) {
+            case "full_name DESC":
+            case "customer_id DESC":
+            case "customer_id ASC":
+                order = orderBy;
+                break;
+            default:
+                order = "full_name ASC";
+        }
+
+        String sql = "SELECT * FROM customer ORDER BY " + order;
+        return jdbcTemplate.query(sql, new CustomerMapper());
+    }
+
 
     public Customer findByEmail(String email) {
         String sql = "SELECT * FROM customer WHERE email = ?";

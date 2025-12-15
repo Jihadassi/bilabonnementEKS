@@ -11,14 +11,14 @@ public class RentalContract {
     private int carId;
 
     //userId skal måske slettes hvis den kan laves i user klassen og forbindes derigennem
-    private int userId;
+    private Integer userId;
     private String pickupLocation;
     private String dropoffLocation;
     private Date startDate;
     private Date endDate;
 
     //Skal måske bruges til kundeoplysninger i lejekontrakten
-    private int customerId;
+    private Integer customerId;
     private String customerName;
     private String customerEmail;
     private String customerPhoneNumber;
@@ -43,14 +43,14 @@ public class RentalContract {
     public void setCarId(int carId) { this.carId = carId; }
 
     //Ikke sikkert den skal bruges, hvis den kan komme ind under user model klassen og forbindes derigennem
-    public int getUserId() { return userId; }
-    public void setUserId(int userId) { this.userId = userId; }
+    public Integer getUserId() { return userId; }
+    public void setUserId(Integer userId) { this.userId = userId; }
     //-----
 
 
     //Ikke sikkert den skal bruges, hvis den kan komme ind under customer model klassen og forbindes derigennem
-    public int getCustomerId() { return customerId; }
-    public void setCustomerId(int customerId) { this.customerId = customerId; }
+    public Integer getCustomerId() { return customerId; }
+    public void setCustomerId(Integer customerId) { this.customerId = customerId; }
     //------
 
 

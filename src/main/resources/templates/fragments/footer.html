@@ -7,7 +7,8 @@
 <body>
 <div th:fragment="footer">
     <footer style="text-align:center; padding:10px; background-color:#e0f0ff;">
-        <a th:href="${homeUrl}"
+        <a th:if="${homeUrl != null}"
+           th:href="@{${homeUrl}}"
            style="text-decoration:none; color:white; background-color:#2196f3; padding:5px 10px; border-radius:5px;">
             Tilbage til oversigt
         </a>

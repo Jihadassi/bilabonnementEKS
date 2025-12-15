@@ -19,15 +19,24 @@
             <button class="btn-green"> Tilføj bil</button>
         </a>
     </div>
-    <!-- TODO: tilføj trim_level, car_rent_price, car_total_price, reg_tax, co2_emission
-    TODO: car_status(IKKE active_status)-->
+    <!--
+    TODO: Kundeinformationer vises ikke under kontrakter
+    TODO: Whitelabel når man prøver at slette en kontrakt
+    TODO: Whitelabel når man prøver at slette en kunde
+    TODO: Når man opretter en kontrakt skal man ikke kunne skrive en biludlejnings pris
+    TODO: da bilerne allerede har en pris pr måned i databasen.
+    TODO: whitelabel når man prøver at oprette en lejekontrakt-->
 <table class="table">
     <tr>
         <th>Mærke</th>
         <th>Model</th>
         <th>Kilometer</th>
+        <th>Registrerings tax</th>
+        <th>Co2 udledning</th>
         <th>Status</th>
         <th>Pris pr. måned</th>
+        <th>Total pris</th>
+        <th>Udlejet</th>
         <th>Handling</th>
     </tr>
 
@@ -35,10 +44,14 @@
         <td th:text="${car.carBrand}"></td>
         <td th:text="${car.carModel}"></td>
         <td th:text="${car.currentKm}"></td>
-    <td>
-    <span th:text="${car.activeStatus} ? 'Aktiv' : 'Inaktiv'"></span>
-    </td>
+        <td th:text="${car.regTax}"></td>
+        <td th:text="${car.co2Emission}"></td>
+        <td th:text="${car.carStatus}"></td>
         <td th:text="${car.carRentPrice} + ' kr'"></td>
+        <td th:text="${car.carTotalPrice} + ' kr'"></td>
+        <td>
+            <span th:text="${car.activeStatus} ? 'Aktiv' : 'Inaktiv'"></span>
+        </td>
     <td>
     <a th:href="@{'/dr/cars/delete/' + ${car.carId}}">
         <button class="btn-red">Slet</button>

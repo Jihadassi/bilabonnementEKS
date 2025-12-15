@@ -11,7 +11,24 @@
 
 <div class="main-container">
     <h1>Kunder</h1>
+    <a th:href="@{/dr/customers/new}">
+        <button class="btn-green">Opret ny kunde</button>
+    </a>
+    <form method="get" th:action="@{/dr/customers}" class="sort-form">
 
+        <label for="sort">Sorter efter:</label>
+
+        <select name="sort" id="sort" onchange="this.form.submit()">
+            <option value="name_asc" th:selected="${currentSort == 'name_asc'}">Navn (A–Z)</option>
+            <option value="name_desc" th:selected="${currentSort == 'name_desc'}">Navn (Z–A)</option>
+            <option value="newest" th:selected="${currentSort == 'newest'}">Nyeste først</option>
+            <option value="oldest" th:selected="${currentSort == 'oldest'}">Ældste først</option>
+        </select>
+
+    </form>
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
     <table class="table">
         <thead>
         <tr>

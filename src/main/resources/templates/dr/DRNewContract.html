@@ -31,28 +31,31 @@
         <label for="includedKm">Inkluderede km:</label>
         <input type="number" th:field="*{includedKm}" id="includedKm" required/>
 
-        <label for="carRentPrice">Biludlejningspris:</label>
-        <input type="number" th:field="*{carRentPrice}" id="carRentPrice" required/>
-
         <label for="pickupLocation">Afhentningssted:</label>
         <input type="text" th:field="*{pickupLocation}" id="pickupLocation" required/>
 
         <label for="dropoffLocation">Afleveringssted:</label>
         <input type="text" th:field="*{dropoffLocation}" id="dropoffLocation" required/>
 
-        <h3>Kundeoplysninger</h3>
+        <label for="userId">Bruger ID</label>
+        <input type="number"
+               th:field="*{userId}"
+               id="userId"
+               required
+               min="1">
 
-        <label for="customerName">Navn:</label>
-        <input type="text" name="customerName" id="customerName" required/>
+        <h3>Vælg kunde</h3>
 
-        <label for="customerEmail">Email:</label>
-        <input type="email" name="customerEmail" id="customerEmail" required/>
+        <label for="customerId">Vælg kunde</label>
 
-        <label for="customerPhoneNumber">Telefonnummer:</label>
-        <input type="text" name="customerPhoneNumber" id="customerPhoneNumber" required/>
+        <select th:field="*{customerId}" id="customerId" required>
+            <option value="" disabled selected>-- Vælg kunde --</option>
 
-        <label for="customerAddress">Adresse:</label>
-        <input type="text" name="customerAddress" id="customerAddress" required/>
+            <option th:each="customer : ${customers}"
+                    th:value="${customer.customerId}"
+                    th:text="${customer.fullName}">
+            </option>
+        </select>
 
         <button type="submit" class="btn-green">Gem lejekontrakt</button>
         <a th:href="@{/dr/contracts}" class="btn-blue" style="margin-left: 10px;">Tilbage til lejekontrakter</a>
