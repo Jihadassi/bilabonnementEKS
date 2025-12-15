@@ -32,24 +32,24 @@ public class RentalContractRepository {
     }
 
     public List<RentalContract> findAll() {
-        String sql = "SELECT * FROM rental_contract ORDER BY contract_id DESC";
+        String sql = "SELECT * FROM rentalContracts ORDER BY contract_id DESC";
         return jdbc.query(sql, (rs, row) -> mapRow(rs));
     }
 
     public RentalContract findById(int id) {
-        String sql = "SELECT * FROM rental_contract WHERE contract_id = ?";
+        String sql = "SELECT * FROM rentalContracts WHERE contract_id = ?";
         return jdbc.queryForObject(sql, new Object[]{id}, (rs, row) -> mapRow(rs));
     }
 
     public List<RentalContract> findCustomerId(int customerId) {
-        String sql = "SELECT * FROM rental_contract WHERE customer_id = ?";
+        String sql = "SELECT * FROM rentalContracts WHERE customer_id = ?";
         return jdbc.query(sql, new Object[]{customerId}, (rs, row) -> mapRow(rs));
     }
 
 
     public void create(RentalContract rc) {
         String sql = """
-            INSERT INTO rental_contract
+            INSERT INTO rentalContracts
             (start_date, end_date, current_km, included_km, car_rent_price,
              pickup_location, dropoff_location, car_id, user_id, customer_id)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)

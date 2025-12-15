@@ -1,7 +1,9 @@
 package com.example.bilabonnementeks.controller;
 
 
+import com.example.bilabonnementeks.model.Customer;
 import com.example.bilabonnementeks.repository.CarRepository;
+import com.example.bilabonnementeks.service.CustomerService;
 import com.example.bilabonnementeks.service.RentalContractService;
 import com.example.bilabonnementeks.model.Car;
 import com.example.bilabonnementeks.model.RentalContract;
@@ -9,23 +11,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+
 @Controller
 @RequestMapping("/dr")
+
+
 public class DRController {
 
     private final RentalContractService rentalContractService;
     private final CarRepository carRepository;
+    private final CustomerService customerService;
 
-    public DRController(RentalContractService rentalContractService, CarRepository carRepository) {
+    public DRController(RentalContractService rentalContractService, CarRepository carRepository, CustomerService customerService) {
         this.rentalContractService = rentalContractService;
         this.carRepository = carRepository;
+        this.customerService = customerService;
     }
 
 
 
     @GetMapping("/menu")
     public String showMenu(){
-        return "dr/drMenu";
+        return "dr/DRMenu";
     }
 
     @GetMapping("/contracts")
@@ -54,7 +63,7 @@ public class DRController {
 
         model.addAttribute("contracts", views);
         model.addAttribute("homeUrl", "/dr/menu");
-        return "dr/drContracts";
+        return "dr/DRContracts";
     }
 
     @GetMapping("/new/contract")
@@ -62,7 +71,7 @@ public class DRController {
         model.addAttribute("cars", carRepository.findAll());
         model.addAttribute("rentalContract", new RentalContract());
         model.addAttribute("homeUrl", "/dr/menu");
-        return "dr/drNewContract";
+        return "dr/DRNewContract";
     }
 
     @PostMapping("/contracts")
@@ -83,7 +92,7 @@ public class DRController {
         model.addAttribute("contract", rc);
         model.addAttribute("car", car);
         model.addAttribute("homeUrl", "/dr/contracts");
-        return "dr/drContractInfo";
+        return "dr/DRContractInfo";
     }
 
 
@@ -91,14 +100,14 @@ public class DRController {
     public String showCars(Model model){
         model.addAttribute("cars", carRepository.findAll());
         model.addAttribute("homeUrl", "/dr/menu");
-        return "dr/drCars";
+        return "dr/DRCars";
     }
 
     @GetMapping("/cars/new")
-    public String AddCar(Model model) {
+    public String addCar(Model model) {
         model.addAttribute("car", new Car());
         model.addAttribute("homeUrl", "/dr/menu");
-        return "dr/drAddCar";
+        return "dr/DRAddCar";
     }
 
     @PostMapping("/cars")
@@ -109,9 +118,11 @@ public class DRController {
 
     @GetMapping("/customers")
     public String listCustomers(Model model) {
-        model.addAttribute("customers");
+        List<Customer> customers = customerService.getAllCustomers();
+
+        model.addAttribute("customers",customers);
         model.addAttribute("homeUrl", "/dr/menu");
-        return "dr/drCustomers";
+        return "dr/DRCustomers";
     }
 
     @GetMapping("/cars/delete/{id}")

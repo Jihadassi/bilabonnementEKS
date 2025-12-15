@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="https://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lejeaftaler</title>
-    <link rel="stylesheet" th:href="@{/global.css}">
-    <link rel="stylesheet" th:href="@{/dr.css}">
+    <link rel="stylesheet" th:href="@{/CSS/global.css}">
+    <link rel="stylesheet" th:href="@{/CSS/dr.css}">
 </head>
 <body>
+
 <div th:replace="~{fragments/header :: header}"></div>
 
 <div class="container">
@@ -16,12 +17,10 @@
         <tr>
             <th>Lejeaftaler</th>
         </tr>
-
         <tr th:each="c : ${contracts}">
             <td>
-                <a th:href="@{/dr/contracts/info/{id}(id=${c.contractId})}"
+                <a th:href="@{/dr/contract/info/{id}(id=${c.contractId})}"
                    th:text="${'ID ' + c.contractId + ' * ' + c.customerName + ' * ' + c.carBrand + ' * ' + c.carModel + ' * ' + c.startDate + ' --> ' + c.endDate}">
-
                 </a>
             </td>
         </tr>
