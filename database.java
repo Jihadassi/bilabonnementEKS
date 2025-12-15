@@ -64,6 +64,14 @@ foreign key (car_id) references car(car_id),
 foreign key (customer_id) references customer(customer_id)
         );
 
+insert into customer(customer_id, full_name, email, phone_number, address)
+values
+        (1, 'Jaron Kahalani', 'jk@ek.dk', 12345678, 'Torbenvej 29c'),
+(2, 'Cay Larsen', 'cahl@ek.dk', 11223344, 'Fredensborgvej 11'),
+        (3, 'Aniko Zsigri', 'aniz@ek.dk', 55667788, 'Søvtorvsvej 9');
+
+
+
 
 insert into users (username, user_password, user_role)
 values
@@ -77,3 +85,11 @@ values
         ('VIN001', 'Toyota', 'Corolla', 50000, 1, 'OK', 2500, 200000, 15000, 90, FALSE),
 ('VIN002', 'Tesla', 'Model 3', 30000, 2, 'OK', 4200, 350000, 20000, 0, FALSE),
         ('VIN003', 'BMW', '320i', 70000, 3, 'OK', 3100, 280000, 18000, 140, FALSE);
+
+insert into rentalContracts (start_date, end_date, current_km, included_km, car_rent_price, pickup_location, dropoff_location, car_id, user_id, customer_id
+                             )
+values
+
+        ('2025-01-01', '2025-06-01', 50000, 15000, 2500, 'Kapelvej 1', 'Kapelvej 1', 1, 1, 1),
+
+('2025-02-15', '2025-08-15', 30000, 20000, 4200, 'Ordrupvej 88', 'Ordrupvej 88', 2, 2, 2);
