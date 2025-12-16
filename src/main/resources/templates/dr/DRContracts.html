@@ -2,8 +2,8 @@
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lejeaftaler</title>
-    <link rel="stylesheet" th:href="@{/CSS/global.css}">
-    <link rel="stylesheet" th:href="@{/CSS/dr.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/dr.css}">
 </head>
 <body>
 
@@ -29,7 +29,7 @@
 
     </form>
 
-    <a th:href="@{/dr/new/contract}" class="button">Opret ny lejeaftale</a>
+    <a th:href="@{/dr/new/contract}" class="btn-green">Opret ny lejeaftale</a>
 
     <table>
         <tr>
@@ -37,8 +37,14 @@
         </tr>
         <tr th:each="c : ${contracts}">
             <td>
-                <a th:href="@{/dr/contract/info/{id}(id=${c.contractId})}"
-                   th:text="${'ID ' + c.contractId + ' * ' + c.customerName + ' * ' + c.carBrand + ' * ' + c.carModel + ' * ' + c.startDate + ' --> ' + c.endDate}">
+                <a th:href="@{/dr/contract/info/{id}(id=${c.contractId})}" class="contract-card">
+                    <div class="card">
+                        <p>
+                   <span th:text="${'ID ' + c.contractId + ' * ' + c.customerName + ' * ' + c.carBrand + ' * ' + c.carModel + ' * ' + c.startDate + ' --> ' + c.endDate}"></span>
+                        </p>
+                    </div>
+                    </a>
+
                 </a>
             </td>
         </tr>
@@ -47,4 +53,3 @@
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
-</html>

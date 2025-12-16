@@ -53,4 +53,6 @@ public class RentalContractService {
         rentalContractRepository.closeContract(contractId);
     }
 
+
+
 }

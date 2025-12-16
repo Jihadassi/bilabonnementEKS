@@ -113,6 +113,13 @@ input, select {
     padding: 20px;
 }
 
+.contract-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    margin-bottom: 12px;
+}
+
 .card {
     background: white;
     padding: 25px 30px;
@@ -171,3 +178,5 @@ input, select {
 .btn-delete:hover {
     background: #990000;
 }
+
+

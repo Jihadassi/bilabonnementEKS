@@ -12,6 +12,7 @@ public class RentalContractRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+
     public RentalContractRepository(JdbcTemplate jdbc, JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -106,5 +107,6 @@ public class RentalContractRepository {
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, customerId);
         return count != null && count > 0;
     }
+
 
 }
