@@ -13,7 +13,7 @@ public class UserRepository {
     public UserRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
-
+   // valider login ved at tjekke brugernavn og kode i databasen
     public User validateLogin(String username, String password) {
         String sql = "SELECT * FROM USER WHERE username = ? AND user_password = ?";
         return (User)this.jdbc.query(sql, new Object[]{username, password}, (rs) -> {

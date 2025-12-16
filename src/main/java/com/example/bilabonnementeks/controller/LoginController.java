@@ -16,9 +16,11 @@ import java.util.Optional; // håndtere værdier der måske ikke findes
 
 
 @Controller
-public class LoginController { //håndterer HTTP-requests.
+//håndterer HTTP-requests.
+public class LoginController {
 
-    private final JdbcTemplate jdbcTemplate; // værktøj til at sende SQL-queries til databasen.
+    // værktøj til at sende SQL-queries til databasen.
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public LoginController(JdbcTemplate jdbcTemplate, LoginService loginService) {
@@ -26,7 +28,7 @@ public class LoginController { //håndterer HTTP-requests.
     }
 
 
-
+    // Navigation til LogIn siden
     @GetMapping("/login")
     public String loginPage() {
         return "login"; // returnerer src/main/resources/templates/login.html (Thymeleaf)
@@ -41,12 +43,12 @@ public class LoginController { //håndterer HTTP-requests.
      * Her bruges et parameteriseret query for at adskille SQL-kommandoen fra brugerens input,
      * så databasen ikke lader brugeren køre sin egen SQL-kode.
      */
+
+    //Håndtere og validere login og rolle og videresende brugeren til den korrekte menu
     @PostMapping("/login")
     public String handleLogin(@RequestParam String username, @RequestParam String password, HttpSession session, RedirectAttributes redirectAttributes) {
 
         try {
-            // Bemærk: hvis din tabel hedder USER (store bogstaver), så brug backticks i SQL.
-            // Hvis din tabel hedder noget andet (fx users), ret SQL'en nedenfor.
             String sql = "SELECT user_role FROM users WHERE username = ? AND user_password = ? LIMIT 1";
 
             Optional<String> roleOpt = jdbcTemplate.query(sql, new Object[]{username, password}, rs -> {
@@ -94,11 +96,7 @@ public class LoginController { //håndterer HTTP-requests.
     }
 
 
-
-    /**
-     * GET /logout - fortæller systemet at denne bruger, bruger ikke længere systemet
-     * og at den skal stoppe sessionen
-     */
+    //stopper sessionen for den nuværende bruger
     @GetMapping("/logout")
     public String logout(HttpSession session, Model model) {
         session.invalidate();

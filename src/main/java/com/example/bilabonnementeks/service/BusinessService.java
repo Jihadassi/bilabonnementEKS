@@ -15,21 +15,22 @@ public BusinessService(CarRepository carRepository){
     this.carRepository=carRepository;
 }
 
+//tæller antallet af aktive biler
 public int countActiveCars(){
     return carRepository.findByActiveStatus(true).size();
 }
-
+// tæller antallet af ikke aktive biler
 public int countInactiveCars(){
         return carRepository.findByActiveStatus(false).size();
     }
-
+// Beregner den samlede lejeindtægt fra aktive biler
 public int totalActiveRevenue(){
     return carRepository.findByActiveStatus(true)
             .stream()
             .mapToInt(Car::getCarRentPrice)
             .sum();
 }
-
+//henter alle biler fra repo
 public List<Car> getAllCars() {
     return carRepository.findAll();
 }

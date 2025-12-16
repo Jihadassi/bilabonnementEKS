@@ -6,14 +6,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
-// her ligger logikken for hvordan man arbejder med cars, logikken skal bruges flere steder
+
 @Service
 public class CarService {
 
     private final CarRepository carRepository; // opretter en variabel der gemmer den repository
 
-// Spring giver automatisk et CarRepository-objekt.
-//this.carRepository betyder: gem det så vi kan bruge det i metoderne.
+
     public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
     }

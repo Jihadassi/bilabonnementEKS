@@ -7,17 +7,18 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
-// den fortæller spring at denne klasse snakker med databasen
+//Fortæller spring at denne klasse snakker med databasen
 @Repository
 
-// this class is a bean that organizes persistence logic
-public class CarRepository { // i denne klasse ligger database metoderne for Car
-    private final JdbcTemplate jdbc; // en variabel som bruges til sql commands
+
+// Her ligger database metoderne
+public class CarRepository {
+    // en variabel som bruges til sql commands
+    private final JdbcTemplate jdbc;
 
 
 
-// This runs when the object is created.
-//Spring gives us a JdbcTemplate, and we store it in our own jdbc variable.
+
     public CarRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
@@ -40,31 +41,27 @@ public class CarRepository { // i denne klasse ligger database metoderne for Car
         return c; // returnere den udfyldte car objekt
     }
 
-    // den metode kører en sql query for at finde og udskrive alle biler,
-    // jdbc.query runs the SQL and calls mapCar for each row.
+    //Metoden kører en sql query for at finde og udskrive alle biler,
     public List<Car> findAll() {
         String sql = "SELECT * FROM CAR ORDER BY car_id DESC";
         return jdbc.query(sql, (rs, row) -> mapCar(rs));
     }
 
 
-    // denne metode finder biler ud far status
-    // vi får en liste af biler
+    // metoden finder biler ud far status
     public List<Car> findByActiveStatus(boolean active) {
         String sql = "SELECT * FROM CAR WHERE active_status = ? ORDER BY car_id DESC";
         return jdbc.query(sql, new Object[]{active}, (rs, row) -> mapCar(rs));
     }
 
 
-    // denne metode finder en bil ud fra specifikt id
-    // queryForObject() returner kun 1 resultat
+    //metoden finder en bil ud fra id
     public Car findById(int id) {
         String sql = "SELECT * FROM CAR WHERE car_id = ?";
         return jdbc.queryForObject(sql, new Object[]{id}, (rs, row) -> mapCar(rs));
     }
 
-    // denne metode tilføjer en ny bil til databasen
-    // jdbs.templace kører INSERT komandoen
+    //tilføjer en ny bil til databasen
     public void create(Car car) {
         String sql = """
             INSERT INTO CAR 
@@ -87,13 +84,13 @@ public class CarRepository { // i denne klasse ligger database metoderne for Car
                 car.isActiveStatus()
         );
     }
-    // denne metode sletter en bil ud fra givem ID
+    //sletter en bil ud fra given ID
     public void delete(int id) {
         jdbc.update("DELETE FROM CAR WHERE car_id = ?", id);
     }
 
 
-    // denne metode sætter en bils status til aktiv
+    //sætter en bils status til aktiv
     public void setActiveStatus(int carId, boolean status) {
         jdbc.update("UPDATE CAR SET active_status = ? WHERE car_id = ?", status, carId);
     }

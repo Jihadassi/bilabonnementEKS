@@ -17,18 +17,18 @@ public class CustomerRepository {
     public CustomerRepository(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
-
+    // henter alle kunder fra databasen og sorter efter nyeste først
     public List<Customer> findAll(){
         String sql = "SELECT * FROM customer ORDER BY customer_id DESC";
         return jdbcTemplate.query(sql, new CustomerMapper());
     }
-
+    // finder en kunde ud far iD
     public Customer findById(int id) {
         String sql = "SELECT * FROM customer WHERE customer_id = ?";
         List<Customer> result = jdbcTemplate.query(sql, new CustomerMapper(), id);
         return result.isEmpty() ? null : result.get(0);
     }
-
+    // henter alle kunder far databasen og sorter faldende ID
     public List<Customer> findAllOrderBy(String orderBy) {
 
         String order;
@@ -42,28 +42,28 @@ public class CustomerRepository {
             default:
                 order = "full_name ASC";
         }
-
+        // sortering her
         String sql = "SELECT * FROM customer ORDER BY " + order;
         return jdbcTemplate.query(sql, new CustomerMapper());
     }
 
-
+    // finder kunder ud far email
     public Customer findByEmail(String email) {
         String sql = "SELECT * FROM customer WHERE email = ?";
         List<Customer> result = jdbcTemplate.query(sql, new CustomerMapper(), email);
         return result.isEmpty() ? null : result.get(0);
     }
-
+    // oprettelse af nye kunde
     public void create(Customer c) {
         String sql = "INSERT INTO customer (full_name, email, phone_number, address) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, c.getFullName(), c.getEmail(), c.getPhoneNumber(), c.getAddress());
     }
-
+    // sletter en kunde med bestemt ID
     public void deleteById(int id) {
         String sql = "DELETE FROM customer WHERE customer_id = ?";
         jdbcTemplate.update(sql, id);
     }
-
+    // mapper en række fra databasen til en objekt
     private static class CustomerMapper implements RowMapper<Customer> {
         @Override
         public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {

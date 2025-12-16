@@ -35,17 +35,18 @@ public class DRController {
     }
 
 
-    //GetMapping til at navigere i systemet
+    //Navigation til menuen for en dataregistrator
     @GetMapping("/menu")
     public String showMenu(){
         return "dr/DRMenu";
     }
 
+    //Navigation til listen med kontrakter
     @GetMapping("/contracts")
     public String listContracts(
             @RequestParam(defaultValue = "all") String status, Model model) {
 
-        //Kalder service klassen for at alle lejeaftaler med den valgte status
+        //Kalder service klassen for alle lejeaftaler med den valgte status
         var contractInfo = rentalContractService.getContractsByStatus(status);
 
         //Liste til ContractView objekter
@@ -68,7 +69,7 @@ public class DRController {
                 v.carModel = "";
             }
 
-            //Henter kunde fra repository og gemmer det til listen af view objekter
+            //Henter kunde og gemmer det til listen af view- objekter
             if (rc.getCustomerId() != null) {
                 Customer customer = customerService.findById(rc.getCustomerId());
                 v.customerName = customer != null ? customer.getFullName() : "Ukendt";
@@ -86,14 +87,14 @@ public class DRController {
 
         return "dr/DRContracts";
     }
-
+//Navigation til siden for oprettelse af nye kunde
     @GetMapping("/customers/new")
     public String showCreateCustomerForm(Model model) {
         model.addAttribute("customer", new Customer());
         model.addAttribute("homeUrl", "/dr/customers");
         return "dr/DRNewCustomer";
     }
-
+// Navigation til siden for oprettelsen af nye lejekontrakt
     @GetMapping("/new/contract")
     public String createContract(Model model) {
         model.addAttribute("cars", carRepository.findAll());
@@ -102,7 +103,7 @@ public class DRController {
         model.addAttribute("homeUrl", "/dr/menu");
         return "dr/DRNewContract";
     }
-
+// Gemmer af nye lejekontrakt
     @PostMapping("/contracts")
     public String saveContract(@ModelAttribute RentalContract rentalContract){
 
@@ -115,11 +116,12 @@ public class DRController {
 
         rentalContractService.createContract(rentalContract);
 
+        // opdater bilens status
         carRepository.setActiveStatus(rentalContract.getCarId(), true);
 
         return "redirect:/dr/contracts";
     }
-
+    //henter kontrakt ID, bil ID og kunde ID og sender data til visning
     @GetMapping("/contract/info/{id}")
     public String showContractInfo(@PathVariable int id, Model model) {
         RentalContract rc = rentalContractService.getContractById(id);
@@ -141,33 +143,33 @@ public class DRController {
         return "dr/DRContractInfo";
     }
 
-
+    // henter alle biler og sender dem til visning
     @GetMapping("/cars")
     public String showCars(Model model){
         model.addAttribute("cars", carRepository.findAll());
         model.addAttribute("homeUrl", "/dr/menu");
         return "dr/DRCars";
     }
-
+    //Opretter nye bil og viser formular til tilføjelse af bil
     @GetMapping("/cars/new")
     public String addCar(Model model) {
         model.addAttribute("car", new Car());
         model.addAttribute("homeUrl", "/dr/menu");
         return "dr/DRAddCar";
     }
-
+    //Gemmer en ny bil og videresender til biloversigt
     @PostMapping("/cars")
     public String saveCar(@ModelAttribute Car car) {
         carRepository.create(car);
         return "redirect:/dr/cars";
     }
-
+    //Gemmer en ny kunde og videresender til kundeoversigt
     @PostMapping("/customers")
     public String saveCustomer(@ModelAttribute Customer customer) {
         customerService.createCustomer(customer);
         return "redirect:/dr/customers";
     }
-
+    //Henter og viser listen af kunder med mulighed for sortering
     @GetMapping("/customers")
     public String listCustomers(
             @RequestParam(defaultValue = "name_asc") String sort,
@@ -188,20 +190,20 @@ public class DRController {
             default:
                 customers = customerService.getAllCustomersOrderBy("full_name ASC");
         }
-
+        //kunder der opfylder kriterier sendes til visning
         model.addAttribute("customers", customers);
         model.addAttribute("currentSort", sort);
         model.addAttribute("homeUrl", "/dr/menu");
         return "dr/DRCustomers";
     }
 
-
+    //sletter en bil ud fra id fra repo
     @GetMapping("/cars/delete/{id}")
     public String deleteCar(@PathVariable int id) {
         carRepository.delete(id);
         return "redirect:/dr/cars";
     }
-
+    //afslutter en kontrakt
     @PostMapping("/contracts/close/{id}")
     public String closeContract(@PathVariable int id) {
 
@@ -213,13 +215,13 @@ public class DRController {
         int carId = contract.getCarId();
 
         rentalContractService.closeContract(id);
-
+        //marker bilen som inaktiv
         carRepository.setActiveStatus(carId, false);
 
         return "redirect:/dr/contracts";
     }
 
-
+    // Sletter en kunde hvis den ikke har aktive kontrakter
     @PostMapping("/customers/delete/{id}")
     public String deleteCustomer(@PathVariable int id,
                                  RedirectAttributes redirectAttributes) {

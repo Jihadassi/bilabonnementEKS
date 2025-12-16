@@ -18,12 +18,12 @@ public class FUController {
     public FUController(CarService carService) {
         this.carService = carService;
     }
-
+    // navigation til Forretningsudvikler menuen
     @GetMapping ("/fu/menu")
     public String fuMenu() {
         return "Forretningsudvikler/FUMenu";
     }
-
+    //Henter alle biler til visning
     @GetMapping("/fu/cars")
     public String fuCars(Model model) {
         List<Car> cars = carService.findAll();
@@ -34,12 +34,11 @@ public class FUController {
         long inactiveCount = cars.size() - activeCount;
 
         // sammenlægger betalinger og giver en samlet betaling
-        int activePayment = cars.stream().filter(Car::isActiveStatus).mapToInt(Car::getCarRentPrice).sum(); //Det er meget chat-gpt agtigt skrevet
+        int activePayment = cars.stream().filter(Car::isActiveStatus).mapToInt(Car::getCarRentPrice).sum();
+        //Beregning af samlet pris
+        int totalPayment = cars.stream().mapToInt(Car::getCarRentPrice).sum();
 
-        int totalPayment = cars.stream()
-                .mapToInt(Car::getCarRentPrice)
-                .sum();
-
+        // tilføjer bilstatistikker og viser biloversigten for FU
         model.addAttribute("activeCount", activeCount);
         model.addAttribute("inactiveCount", inactiveCount);
         model.addAttribute("activePayment", activePayment);
@@ -79,7 +78,7 @@ public class FUController {
 //        return "Forretningsudvikler/FUStatistics";
 //
 //    }
-
+    //Navigation til siden med statistik for FU
     @GetMapping("/fu/statistics")
     public String showStatistics(Model model, @RequestParam(required = false, defaultValue = "2025") int year) {
         int[] rentalsPerMonth = {5, 7, 3, 8, 6, 4, 9, 2, 7, 5, 6, 4};

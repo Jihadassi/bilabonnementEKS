@@ -12,7 +12,7 @@ private final UserRepository userRepository;
 public LoginService(UserRepository userRepository){
     this.userRepository= userRepository;
 }
-
+// valider login vha userRepo
 public User validateLogin(String username, String password){
     return userRepository.validateLogin(username, password);
 }
