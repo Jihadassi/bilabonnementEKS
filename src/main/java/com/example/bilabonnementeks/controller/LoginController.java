@@ -1,6 +1,5 @@
 package com.example.bilabonnementeks.controller;
 
-import com.example.bilabonnementeks.model.User;
 import com.example.bilabonnementeks.service.LoginService;
 import jakarta.servlet.http.HttpSession; // bruges til at arbejde med info lagring
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,14 +2,11 @@ package com.example.bilabonnementeks.controller;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.bilabonnementeks.model.Customer;
-import com.example.bilabonnementeks.model.User;
 import com.example.bilabonnementeks.repository.CarRepository;
 import com.example.bilabonnementeks.service.CustomerService;
 import com.example.bilabonnementeks.service.RentalContractService;
 import com.example.bilabonnementeks.model.Car;
 import com.example.bilabonnementeks.model.RentalContract;
-import jakarta.servlet.http.HttpSession;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
