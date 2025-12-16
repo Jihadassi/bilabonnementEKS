@@ -43,28 +43,28 @@ public class CarRepository {
 
     //Metoden kører en sql query for at finde og udskrive alle biler,
     public List<Car> findAll() {
-        String sql = "SELECT * FROM CAR ORDER BY car_id DESC";
+        String sql = "SELECT * FROM car ORDER BY car_id DESC";
         return jdbc.query(sql, (rs, row) -> mapCar(rs));
     }
 
 
     // metoden finder biler ud far status
     public List<Car> findByActiveStatus(boolean active) {
-        String sql = "SELECT * FROM CAR WHERE active_status = ? ORDER BY car_id DESC";
+        String sql = "SELECT * FROM car WHERE active_status = ? ORDER BY car_id DESC";
         return jdbc.query(sql, new Object[]{active}, (rs, row) -> mapCar(rs));
     }
 
 
     //metoden finder en bil ud fra id
     public Car findById(int id) {
-        String sql = "SELECT * FROM CAR WHERE car_id = ?";
+        String sql = "SELECT * FROM car WHERE car_id = ?";
         return jdbc.queryForObject(sql, new Object[]{id}, (rs, row) -> mapCar(rs));
     }
 
     //tilføjer en ny bil til databasen
     public void create(Car car) {
         String sql = """
-            INSERT INTO CAR 
+            INSERT INTO car 
             (vin_number, car_brand, car_model, current_km, trim_level, car_status,
              car_rent_price, car_total_price, reg_tax, co2_emission, active_status)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -86,12 +86,12 @@ public class CarRepository {
     }
     //sletter en bil ud fra given ID
     public void delete(int id) {
-        jdbc.update("DELETE FROM CAR WHERE car_id = ?", id);
+        jdbc.update("DELETE FROM car WHERE car_id = ?", id);
     }
 
 
     //sætter en bils status til aktiv
     public void setActiveStatus(int carId, boolean status) {
-        jdbc.update("UPDATE CAR SET active_status = ? WHERE car_id = ?", status, carId);
+        jdbc.update("UPDATE car SET active_status = ? WHERE car_id = ?", status, carId);
     }
 }
