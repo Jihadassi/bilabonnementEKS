@@ -45,13 +45,13 @@
 
             <div class="fu-stat">
                 Månedsindtægt (aktive biler):
-                <b th:text="${totalActiveRevenue} + ' kr'"></b>
+                <b th:text="${activePayment} + ' kr'"></b>
             </div>
 
             <div class="fu-stat">
                 Potentiel samlet indtægt (hvis alle biler var aktive):
                 <b class="fu-small-gray"
-                   th:text="${totalPotentialRevenue} + ' kr'"></b>
+                   th:text="${totalPayment} + ' kr'"></b>
             </div>
 
         </div>

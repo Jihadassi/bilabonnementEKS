@@ -17,7 +17,7 @@
     <div class="link-list">
         <a th:each="report : ${reports}"
            th:href="@{/sb/report/{id}(id=${report.damageId})}"
-           th:text="${report.damageId} + ' - Bil ID: ' + ${report.carId} + ', Kunde ID: ' + ${report.customerId}">
+           th:text="${report.damageId} + ' - Bil ID: ' + ${report.carId}">
         </a>
     </div>
 </div>

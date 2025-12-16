@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+//Controller for dataregistrator (DR)
+
 @Controller
-@RequestMapping("/dr")
-
-
 public class DRController {
 
     private final RentalContractService rentalContractService;
@@ -35,7 +35,7 @@ public class DRController {
     }
 
 
-
+    //GetMapping til at navigere i systemet
     @GetMapping("/menu")
     public String showMenu(){
         return "dr/DRMenu";
@@ -43,8 +43,7 @@ public class DRController {
 
     @GetMapping("/contracts")
     public String listContracts(
-            @RequestParam(defaultValue = "all") String status,
-            Model model) {
+            @RequestParam(defaultValue = "all") String status, Model model) {
 
         var contractInfo = rentalContractService.getContractsByStatus(status);
         var views = new ArrayList<RentalContract.ContractView>();

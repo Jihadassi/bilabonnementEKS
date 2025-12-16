@@ -42,10 +42,7 @@ public class LoginController { //håndterer HTTP-requests.
      * så databasen ikke lader brugeren køre sin egen SQL-kode.
      */
     @PostMapping("/login")
-    public String handleLogin(@RequestParam String username,
-                              @RequestParam String password,
-                              HttpSession session,
-                              RedirectAttributes redirectAttributes) {
+    public String handleLogin(@RequestParam String username, @RequestParam String password, HttpSession session, RedirectAttributes redirectAttributes) {
 
         try {
             // Bemærk: hvis din tabel hedder USER (store bogstaver), så brug backticks i SQL.
