@@ -34,10 +34,7 @@ public class FUController {
         long inactiveCount = cars.size() - activeCount;
 
         // sammenlægger betalinger og giver en samlet betaling
-        int activePayment = cars.stream()
-                .filter(Car::isActiveStatus)
-                .mapToInt(Car::getCarRentPrice)
-                .sum();
+        int activePayment = cars.stream().filter(Car::isActiveStatus).mapToInt(Car::getCarRentPrice).sum(); //Det er meget chat-gpt agtigt skrevet
 
         int totalPayment = cars.stream()
                 .mapToInt(Car::getCarRentPrice)

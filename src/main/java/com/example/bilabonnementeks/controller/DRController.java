@@ -45,16 +45,20 @@ public class DRController {
     public String listContracts(
             @RequestParam(defaultValue = "all") String status, Model model) {
 
+        //Kalder service klassen for at alle lejeaftaler med den valgte status
         var contractInfo = rentalContractService.getContractsByStatus(status);
+
+        //Liste til ContractView objekter
         var views = new ArrayList<RentalContract.ContractView>();
 
+        //Gennemgår hver lejekontrakt og opretter et view objekt med værdier
         for (RentalContract rc : contractInfo) {
             RentalContract.ContractView v = new RentalContract.ContractView();
             v.contractId = rc.getContractId();
             v.startDate = rc.getStartDate() != null ? rc.getStartDate().toString() : "";
             v.endDate = rc.getEndDate() != null ? rc.getEndDate().toString() : "";
 
-            // Bil
+            //Henter bil fra repository
             Car car = carRepository.findById(rc.getCarId());
             if (car != null) {
                 v.carBrand = car.getCarBrand();
@@ -64,7 +68,7 @@ public class DRController {
                 v.carModel = "";
             }
 
-            // Kunde (aktiv / inaktiv)
+            //Henter kunde fra repository og gemmer det til listen af view objekter
             if (rc.getCustomerId() != null) {
                 Customer customer = customerService.findById(rc.getCustomerId());
                 v.customerName = customer != null ? customer.getFullName() : "Ukendt";
@@ -75,6 +79,7 @@ public class DRController {
             views.add(v);
         }
 
+        //Sender data til view, hvor Thymeleaf kan vise listen af lejeaftaler mm.
         model.addAttribute("contracts", views);
         model.addAttribute("currentStatus", status);
         model.addAttribute("homeUrl", "/dr/menu");
@@ -101,17 +106,16 @@ public class DRController {
     @PostMapping("/contracts")
     public String saveContract(@ModelAttribute RentalContract rentalContract){
 
+        //Finder bilen i databasen med carId, og selectedCar bruges til at hente bilens aktuelle data
         Car selectedCar = carRepository.findById(rentalContract.getCarId());
 
+        //Sætter lejeprisen + bilens kilometertal, som bilen er oprettet med, på lejeaftalen
         rentalContract.setCarRentPrice(selectedCar.getCarRentPrice());
         rentalContract.setCurrentKm(selectedCar.getCurrentKm());
 
         rentalContractService.createContract(rentalContract);
 
-        carRepository.setActiveStatus(
-                rentalContract.getCarId(),
-                true
-        );
+        carRepository.setActiveStatus(rentalContract.getCarId(), true);
 
         return "redirect:/dr/contracts";
     }
