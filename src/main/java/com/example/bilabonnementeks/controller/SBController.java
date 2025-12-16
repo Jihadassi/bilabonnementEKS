@@ -28,7 +28,6 @@ public class SBController {
     @GetMapping("/sb/reports")
     public String listReports(Model model) {
         model.addAttribute("reports", damageReportService.getAllReports());
-        model.addAttribute("homeUrl", "/sb/reports");
         return "Skadebehandler/SBReports";
     }
     // Navigation til siden med formular til ny skaderapport med aktive biler
